@@ -163,101 +163,230 @@ $items = array_merge($universityItems, $programItems);
   <title>StudyNihon</title>
   <style>
     :root {
+      --primary: #0f172a;
+      --secondary: #1d4ed8;
+      --accent: #f59e0b;
+      --bg: #f8fafc;
+      --card: #ffffff;
       --text: #0f172a;
-      --muted: #64748b;
+      --muted: #475569;
       --border: #e2e8f0;
-      --card: #fff;
-      --primary: #1d4ed8;
-      --background: #f8fafc;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
-      background: var(--background);
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #f8fafc 0%, #eef6ff 100%);
       color: var(--text);
-      font-family: Arial, sans-serif;
     }
 
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+
     .container {
-      width: min(1100px, calc(100% - 32px));
+      width: min(1120px, calc(100% - 32px));
       margin: 0 auto;
     }
 
     header {
-      padding: 28px 0;
-      background: #fff;
-      border-bottom: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.96);
+      color: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 12px rgba(15, 23, 42, 0.15);
     }
 
-    header h1 {
-      margin: 0;
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 0;
     }
 
-    .intro {
-      padding: 32px 0 20px;
+    .logo {
+      font-weight: 700;
+      font-size: 1.3rem;
+      letter-spacing: 0.6px;
     }
 
-    .search-form {
-      display: grid;
-      grid-template-columns: 1fr minmax(190px, 260px) auto;
-      gap: 10px;
-      margin: 20px 0 28px;
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      font-size: 0.95rem;
+      color: #dbeafe;
     }
 
-    input,
-    select,
-    button {
-      min-height: 44px;
-      padding: 10px 12px;
-      border: 1px solid #cbd5e1;
-      border-radius: 9px;
-      font: inherit;
-    }
+    .nav-links a:hover { color: #fff; }
 
-    button {
-      border: 0;
-      background: var(--primary);
-      color: white;
+    .btn {
+      display: inline-block;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 18px;
       font-weight: 700;
       cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--secondary);
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(29, 78, 216, 0.18);
+    }
+
+    .btn-primary:hover { transform: translateY(-1px); }
+
+    .btn-outline {
+      background: transparent;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+    }
+
+    .hero { padding: 70px 0 40px; }
+
+    .hero-wrap {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      margin: 0 0 18px;
+      font-size: clamp(2.2rem, 4vw, 4rem);
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 1.08rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 24px 0 28px;
+    }
+
+    .stats {
+      display: flex;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      min-width: 130px;
+    }
+
+    .stat strong { display: block; font-size: 1.35rem; margin-bottom: 4px; }
+    .stat span { color: var(--muted); font-size: 0.9rem; }
+
+    .hero-card {
+      background: linear-gradient(135deg, #0f172a 0%, #1d4ed8 100%);
+      border-radius: 28px;
+      padding: 24px;
+      color: #fff;
+      box-shadow: 0 28px 60px rgba(29, 78, 216, 0.2);
+    }
+
+    .mini-panel {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+
+    .mini-panel:last-child { margin-bottom: 0; }
+    .mini-panel h3 { margin: 0 0 8px; font-size: 1.05rem; }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      background: #fff;
+      color: var(--primary);
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin: 6px 6px 0 0;
+    }
+
+    .search-section { padding: 40px 0 10px; }
+
+    .panel {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: 0 15px 36px rgba(15, 23, 42, 0.05);
+      padding: 24px;
+    }
+
+    .search-row {
+      display: grid;
+      grid-template-columns: 1fr minmax(190px, 260px) auto;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .search-box,
+    .university-select {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-size: 1rem;
+      outline: none;
+      background: #fff;
+      color: var(--text);
+    }
+
+    .search-box:focus,
+    .university-select:focus {
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 4px rgba(29, 78, 216, 0.08);
     }
 
     .content-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-      padding-bottom: 44px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
     }
 
     .card {
       min-width: 0;
-      padding: 16px;
-      border: 1px solid var(--border);
-      border-radius: 16px;
       background: var(--card);
-      box-shadow: 0 5px 18px rgba(15, 23, 42, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      transition: 0.2s ease;
       cursor: pointer;
-      transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
     }
 
     .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 26px rgba(15, 23, 42, 0.09);
+      transform: translateY(-3px);
+      box-shadow: 0 18px 35px rgba(15, 23, 42, 0.08);
     }
 
     .card.expanded {
-      border-color: var(--primary);
-      box-shadow: 0 12px 26px rgba(15, 23, 42, 0.12);
+      border-color: var(--secondary);
+      box-shadow: 0 18px 35px rgba(15, 23, 42, 0.1);
     }
 
-    .card-image-wrap {
-      position: relative;
-      margin-bottom: 14px;
-    }
+    .card-image-wrap { position: relative; margin-bottom: 14px; }
 
     .card-image {
       display: block;
@@ -269,10 +398,7 @@ $items = array_merge($universityItems, $programItems);
       background: #f1f5f9;
     }
 
-    .program-logo {
-      padding: 16px;
-      object-fit: contain;
-    }
+    .program-logo { padding: 16px; object-fit: contain; }
 
     .no-image {
       display: flex;
@@ -291,8 +417,12 @@ $items = array_merge($universityItems, $programItems);
       min-height: 30px;
       height: 30px;
       padding: 0;
+      border: 0;
       border-radius: 50%;
       background: rgba(15, 23, 42, 0.82);
+      color: #fff;
+      cursor: pointer;
+      font-weight: 700;
     }
 
     .badge,
@@ -306,39 +436,14 @@ $items = array_merge($universityItems, $programItems);
       font-weight: 700;
     }
 
-    .badge {
-      margin-bottom: 9px;
-      background: #eff6ff;
-      color: #1d4ed8;
-    }
+    .badge { margin-bottom: 9px; background: #eff6ff; color: #1d4ed8; }
+    .type-badge { margin: 0 0 9px 5px; background: #fef3c7; color: #92400e; }
 
-    .type-badge {
-      margin: 0 0 9px 5px;
-      background: #fef3c7;
-      color: #92400e;
-    }
+    .card h3 { margin: 4px 0 10px; font-size: 1.12rem; }
 
-    .card h3 {
-      margin: 4px 0 10px;
-      font-size: 1.12rem;
-    }
-
-    .program-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px;
-      margin-bottom: 10px;
-    }
-
-    .program-type-badge {
-      background: #ecfdf5;
-      color: #047857;
-    }
-
-    .audience-badge {
-      background: #eff6ff;
-      color: #1d4ed8;
-    }
+    .program-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 10px; }
+    .program-type-badge { background: #ecfdf5; color: #047857; }
+    .audience-badge { background: #eff6ff; color: #1d4ed8; }
 
     .meta {
       display: flex;
@@ -364,26 +469,13 @@ $items = array_merge($universityItems, $programItems);
       white-space: pre-line;
     }
 
-    .card-description {
-      margin: 12px 0 0;
-    }
-
-    .card-related-universities {
-      margin-top: 12px;
-    }
-
-    .card-related-universities strong {
-      color: var(--text);
-    }
-
-    .card-related-universities p {
-      margin: 5px 0 0;
-    }
+    .card-description { margin: 12px 0 0; }
+    .card-related-universities { margin-top: 12px; }
+    .card-related-universities strong { color: var(--text); }
+    .card-related-universities p { margin: 5px 0 0; }
 
     .card.expanded .card-description,
-    .card.expanded .card-related-universities {
-      display: block;
-    }
+    .card.expanded .card-related-universities { display: block; }
 
     .card-footer {
       display: flex;
@@ -400,7 +492,6 @@ $items = array_merge($universityItems, $programItems);
       color: #1d4ed8;
       font-size: 0.82rem;
       font-weight: 700;
-      text-decoration: none;
     }
 
     .empty-message {
@@ -409,131 +500,6 @@ $items = array_merge($universityItems, $programItems);
       border: 1px solid var(--border);
       border-radius: 14px;
       background: white;
-    }
-
-    footer {
-      padding: 22px 0;
-      border-top: 1px solid var(--border);
-      background: white;
-      color: var(--muted);
-    }
-
-    dialog {
-      width: min(420px, calc(100% - 32px));
-      padding: 22px;
-      border: 0;
-      border-radius: 14px;
-      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.25);
-    }
-
-    dialog::backdrop {
-      background: rgba(15, 23, 42, 0.5);
-    }
-
-    dialog form {
-      margin-top: 18px;
-      text-align: right;
-    }
-
-    a { text-decoration: none; color: inherit; }
-
-    .nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 18px 0;
-    }
-
-    .logo {
-      font-weight: 700;
-      font-size: 1.3rem;
-      letter-spacing: .6px;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 24px;
-      align-items: center;
-      color: #dbeafe;
-    }
-
-    .nav-links a:hover { color: #fff; }
-
-    .btn {
-      display: inline-block;
-      border: 0;
-      border-radius: 12px;
-      padding: 12px 18px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: #fff;
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: #fff;
-      border: 1px solid rgba(255,255,255,.4);
-    }
-
-    .hero {
-      padding: 70px 0 40px;
-    }
-
-    .hero-wrap {
-      display: grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 32px;
-      align-items: center;
-    }
-
-    .hero h1 {
-      margin: 0 0 18px;
-      font-size: clamp(2.2rem, 4vw, 4rem);
-      line-height: 1.1;
-    }
-
-    .hero p {
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin: 24px 0;
-    }
-
-    .hero-card {
-      padding: 24px;
-      border-radius: 28px;
-      background: linear-gradient(135deg, #0f172a, #1d4ed8);
-      color: #fff;
-    }
-
-    .mini-panel {
-      padding: 18px;
-      margin-bottom: 16px;
-      border: 1px solid rgba(255,255,255,.14);
-      border-radius: 18px;
-      background: rgba(255,255,255,.08);
-    }
-
-    .mini-panel h3 { margin-top: 0; }
-
-    .pill {
-      display: inline-flex;
-      margin: 6px 6px 0 0;
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: #fff;
-      color: #0f172a;
-      font-size: .8rem;
-      font-weight: 700;
     }
 
     .info-section { padding: 54px 0 24px; }
@@ -546,10 +512,8 @@ $items = array_merge($universityItems, $programItems);
       margin-bottom: 24px;
     }
 
-    .section-head h2 { margin: 0; }
-
-    .section-head p,
-    .feature p { color: var(--muted); }
+    .section-head h2 { margin: 0; font-size: clamp(1.7rem, 2vw, 2.4rem); }
+    .section-head p { margin: 0; color: var(--muted); }
 
     .feature-grid {
       display: grid;
@@ -572,9 +536,12 @@ $items = array_merge($universityItems, $programItems);
       height: 48px;
       margin-bottom: 14px;
       border-radius: 14px;
-      background: #dbeafe;
+      background: linear-gradient(135deg, #dbeafe, #e0f2fe);
       font-size: 1.4rem;
     }
+
+    .feature h3 { margin: 0 0 10px; font-size: 1.08rem; }
+    .feature p { margin: 0; color: var(--muted); line-height: 1.7; }
 
     footer {
       margin-top: 50px;
@@ -601,224 +568,315 @@ $items = array_merge($universityItems, $programItems);
     .footer-note,
     .footer-warning {
       margin-top: 8px;
-      font-size: .76rem;
+      font-size: 0.76rem;
       line-height: 1.6;
     }
 
+    dialog {
+      width: min(420px, calc(100% - 32px));
+      padding: 22px;
+      border: 0;
+      border-radius: 14px;
+      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.25);
+    }
+
+    dialog::backdrop { background: rgba(15, 23, 42, 0.5); }
+    dialog form { margin-top: 18px; text-align: right; }
+
     @media (max-width: 900px) {
       .hero-wrap,
+      .content-grid,
       .feature-grid { grid-template-columns: 1fr; }
-
       .nav-links { display: none; }
+      .search-row { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 560px) {
       .hero { padding-top: 52px; }
-
-      .section-head {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .hero-actions {
-        flex-direction: column;
-        align-items: stretch;
-      }
+      .section-head { flex-direction: column; align-items: flex-start; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .hero-actions .btn { width: 100%; text-align: center; }
+      .stats { gap: 10px; }
+      .stat { min-width: 0; flex: 1 1 100px; }
     }
   </style>
 </head>
 <body>
-<header>
-  <div class="container">
-    <h1>StudyNihon</h1>
-    <p>Temukan universitas dan program studi di Jepang.</p>
-  </div>
-</header>
-
-<main class="container">
-  <section class="intro">
-    <h2>Cari Universitas dan Program</h2>
-
-    <form class="search-form" id="search-form" method="GET">
-      <input
-        type="search"
-        name="q"
-        value="<?= h($keyword) ?>"
-        placeholder="Cari kota, program, universitas..."
-      >
-
-      <select name="university_id">
-        <option value="0">Semua universitas</option>
-        <?php foreach ($universityOptions as $option): ?>
-          <option
-            value="<?= (int)$option['id'] ?>"
-            <?= $selectedUniversityId === (int)$option['id'] ? 'selected' : '' ?>
-          >
-            <?= h($option['name']) ?>
-          </option>
-        <?php endforeach; ?>
-      </select>
-
-      <button type="submit">Cari</button>
-    </form>
-  </section>
-
-  <?php if (!$items): ?>
-    <div class="empty-message">
-      <h3>Hasil tidak ditemukan</h3>
-      <p>Coba kata kunci atau pilihan universitas lain.</p>
+  <header>
+    <div class="container nav">
+      <div class="logo">StudyNihon</div>
+      <nav class="nav-links">
+        <a href="#search">Cari</a>
+        <a href="#program">Program</a>
+        <a href="#fitur">Fitur</a>
+        <a href="#tentang">Tentang</a>
+      </nav>
+      <div>
+        <a class="btn btn-outline" href="#search">Mulai Cari</a>
+      </div>
     </div>
-  <?php else: ?>
-    <section class="content-grid" aria-label="Hasil pencarian">
-      <?php foreach ($items as $item): ?>
-        <?php
-          $type = $item['item_type'];
-          $title = $item['title'] ?? '';
-          $imageUrl = $type === 'university'
-              ? ($item['photo_url'] ?? '')
-              : ($item['logo_url'] ?? '');
+  </header>
 
-          $institutionLabels = [
-              'private' => 'Swasta',
-              'public' => 'Negeri Daerah',
-              'national' => 'Negeri',
-          ];
-          $institutionLabel = $institutionLabels[$item['institution_type'] ?? ''] ?? 'Lainnya';
-        ?>
+  <main>
+    <section class="hero">
+      <div class="container hero-wrap">
+        <div>
+          <h1>Temukan universitas dan program studi di Jepang.</h1>
+          <p>
+            Cari universitas, program studi, dan informasi pendukung untuk mewujudkan rencana studi di Jepang.
+          </p>
 
-        <article
-          class="card expandable-card"
-          tabindex="0"
-          aria-expanded="false"
-        >
-          <div class="card-image-wrap">
-            <?php if ($imageUrl !== ''): ?>
-              <img
-                src="<?= h($imageUrl) ?>"
-                alt="<?= h($title) ?>"
-                class="card-image <?= $type === 'program' ? 'program-logo' : '' ?>"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-              >
-              <div class="card-image no-image" style="display:none;">NO IMAGE</div>
-            <?php else: ?>
-              <div class="card-image no-image">NO IMAGE</div>
-            <?php endif; ?>
-
-            <button
-              type="button"
-              class="image-info-button"
-              aria-label="Informasi gambar"
-              data-license="<?= h($item['image_license'] ?? '') ?>"
-              data-info-url="<?= h($item['info_url'] ?? '') ?>"
-              data-website-url="<?= h($item['website_url'] ?? '') ?>"
-            >i</button>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#search">Cari Sekarang</a>
+            <a class="btn btn-outline" href="#program" style="color:#0f172a;border-color:#cbd5e1;background:#fff;">Lihat Program</a>
           </div>
 
-          <span class="badge"><?= $type === 'university' ? 'Universitas' : 'Program' ?></span>
-
-          <?php if ($type === 'university'): ?>
-            <span class="type-badge"><?= h($institutionLabel) ?></span>
-          <?php endif; ?>
-
-          <h3><?= h($title) ?></h3>
-
-          <?php if ($type === 'program'): ?>
-            <div class="program-tags">
-              <?php if (!empty($item['program_type'])): ?>
-                <span class="program-type-badge"><?= h($item['program_type']) ?></span>
-              <?php endif; ?>
-              <?php if (!empty($item['target_audience'])): ?>
-                <span class="audience-badge"><?= h($item['target_audience']) ?></span>
-              <?php endif; ?>
+          <div class="stats">
+            <div class="stat">
+              <strong><?= count($universityItems) ?></strong>
+              <span>Universitas</span>
             </div>
-          <?php endif; ?>
-
-          <div class="meta">
-            <?php if ($type === 'university'): ?>
-              <?php foreach (['prefecture', 'municipality', 'city'] as $field): ?>
-                <?php if (!empty($item[$field])): ?>
-                  <span><?= h($item[$field]) ?></span>
-                <?php endif; ?>
-              <?php endforeach; ?>
-            <?php else: ?>
-              <?php if (!empty($item['city'])): ?>
-                <span><?= h($item['city']) ?></span>
-              <?php endif; ?>
-              <?php if (!empty($item['duration'])): ?>
-                <span><?= h($item['duration']) ?></span>
-              <?php endif; ?>
-            <?php endif; ?>
-          </div>
-
-          <?php if (!empty($item['description'])): ?>
-            <p class="card-description"><?= h($item['description']) ?></p>
-          <?php endif; ?>
-
-          <?php if ($type === 'program' && !empty($item['university_names'])): ?>
-            <div class="card-related-universities">
-              <strong>Universitas yang tersedia</strong>
-              <p><?= h($item['university_names']) ?></p>
+            <div class="stat">
+              <strong><?= count($programItems) ?></strong>
+              <span>Program</span>
             </div>
-          <?php endif; ?>
-
-          <div class="card-footer">
-            <?php if (!empty($item['info_url'])): ?>
-              <a class="website-btn" href="<?= h($item['info_url']) ?>" target="_blank" rel="noopener noreferrer">
-                Informasi
-              </a>
-            <?php endif; ?>
-
-            <?php if (!empty($item['website_url'])): ?>
-              <a class="website-btn" href="<?= h($item['website_url']) ?>" target="_blank" rel="noopener noreferrer">
-                Website
-              </a>
-            <?php endif; ?>
+            <div class="stat">
+              <strong>1</strong>
+              <span>Platform</span>
+            </div>
           </div>
-        </article>
-      <?php endforeach; ?>
+        </div>
+
+        <div class="hero-card">
+          <div class="mini-panel">
+            <h3>Universitas</h3>
+            <span class="pill">Nasional</span>
+            <span class="pill">Swasta</span>
+            <span class="pill">Publik</span>
+          </div>
+
+          <div class="mini-panel">
+            <h3>Program</h3>
+            <span class="pill">S1</span>
+            <span class="pill">S2</span>
+            <span class="pill">Beasiswa</span>
+          </div>
+
+          <div class="mini-panel">
+            <h3>Pencarian</h3>
+            <span class="pill">Kota</span>
+            <span class="pill">Universitas</span>
+            <span class="pill">Program</span>
+          </div>
+        </div>
+      </div>
     </section>
-  <?php endif; ?>
-</main>
 
-<footer>
-  <div class="container">© 2026 StudyNihon</div>
-</footer>
+    <section class="search-section" id="search">
+      <div class="container">
+        <div class="panel">
+          <div class="section-head" id="program">
+            <div>
+              <h2>Cari Universitas dan Program</h2>
+            </div>
+            <p>Gunakan kata kunci atau pilih universitas.</p>
+          </div>
 
-<dialog id="image-info-dialog">
-  <h2>Informasi Gambar</h2>
-  <p><strong>Lisensi:</strong> <span id="dialog-image-license"></span></p>
-  <div id="dialog-image-links"></div>
-  <form method="dialog">
-    <button type="submit">Tutup</button>
-  </form>
-</dialog>
+          <form class="search-row" id="search-form" method="GET">
+            <input
+              id="searchInput"
+              class="search-box"
+              type="search"
+              name="q"
+              value="<?= h($keyword) ?>"
+              placeholder="Cari kota, program, universitas..."
+            >
 
-<section class="info-section" id="fitur">
-  <div class="container">
-    <div class="section-head">
-      <h2>Kenapa website ini membantu?</h2>
-      <p>Semua kebutuhan studi ke Jepang bisa dicari dalam satu tempat.</p>
+            <select class="university-select" name="university_id">
+              <option value="0">Semua universitas</option>
+              <?php foreach ($universityOptions as $option): ?>
+                <option
+                  value="<?= (int)$option['id'] ?>"
+                  <?= $selectedUniversityId === (int)$option['id'] ? 'selected' : '' ?>
+                >
+                  <?= h($option['name']) ?>
+                </option>
+              <?php endforeach; ?>
+            </select>
+
+            <button type="submit" class="btn btn-primary">Cari</button>
+          </form>
+
+          <?php if (!$items): ?>
+            <div class="empty-message">
+              <h3>Hasil tidak ditemukan</h3>
+              <p>Coba kata kunci atau pilihan universitas lain.</p>
+            </div>
+          <?php else: ?>
+            <section class="content-grid" aria-label="Hasil pencarian">
+              <?php foreach ($items as $item): ?>
+                <?php
+                  $type = $item['item_type'];
+                  $title = $item['title'] ?? '';
+                  $imageUrl = $type === 'university'
+                      ? ($item['photo_url'] ?? '')
+                      : ($item['logo_url'] ?? '');
+
+                  $institutionLabels = [
+                      'private' => 'Swasta',
+                      'public' => 'Negeri Daerah',
+                      'national' => 'Negeri',
+                  ];
+                  $institutionLabel = $institutionLabels[$item['institution_type'] ?? ''] ?? 'Lainnya';
+                ?>
+
+                <article
+                  class="card expandable-card"
+                  tabindex="0"
+                  aria-expanded="false"
+                >
+                  <div class="card-image-wrap">
+                    <?php if ($imageUrl !== ''): ?>
+                      <img
+                        src="<?= h($imageUrl) ?>"
+                        alt="<?= h($title) ?>"
+                        class="card-image <?= $type === 'program' ? 'program-logo' : '' ?>"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                      >
+                      <div class="card-image no-image" style="display:none;">NO IMAGE</div>
+                    <?php else: ?>
+                      <div class="card-image no-image">NO IMAGE</div>
+                    <?php endif; ?>
+
+                    <button
+                      type="button"
+                      class="image-info-button"
+                      aria-label="Informasi gambar"
+                      data-license="<?= h($item['image_license'] ?? '') ?>"
+                      data-info-url="<?= h($item['info_url'] ?? '') ?>"
+                      data-website-url="<?= h($item['website_url'] ?? '') ?>"
+                    >i</button>
+                  </div>
+
+                  <span class="badge"><?= $type === 'university' ? 'Universitas' : 'Program' ?></span>
+
+                  <?php if ($type === 'university'): ?>
+                    <span class="type-badge"><?= h($institutionLabel) ?></span>
+                  <?php endif; ?>
+
+                  <h3><?= h($title) ?></h3>
+
+                  <?php if ($type === 'program'): ?>
+                    <div class="program-tags">
+                      <?php if (!empty($item['program_type'])): ?>
+                        <span class="program-type-badge"><?= h($item['program_type']) ?></span>
+                      <?php endif; ?>
+                      <?php if (!empty($item['target_audience'])): ?>
+                        <span class="audience-badge"><?= h($item['target_audience']) ?></span>
+                      <?php endif; ?>
+                    </div>
+                  <?php endif; ?>
+
+                  <div class="meta">
+                    <?php if ($type === 'university'): ?>
+                      <?php foreach (['prefecture', 'municipality', 'city'] as $field): ?>
+                        <?php if (!empty($item[$field])): ?>
+                          <span><?= h($item[$field]) ?></span>
+                        <?php endif; ?>
+                      <?php endforeach; ?>
+                    <?php else: ?>
+                      <?php if (!empty($item['city'])): ?>
+                        <span><?= h($item['city']) ?></span>
+                      <?php endif; ?>
+                      <?php if (!empty($item['duration'])): ?>
+                        <span><?= h($item['duration']) ?></span>
+                      <?php endif; ?>
+                    <?php endif; ?>
+                  </div>
+
+                  <?php if (!empty($item['description'])): ?>
+                    <p class="card-description"><?= h($item['description']) ?></p>
+                  <?php endif; ?>
+
+                  <?php if ($type === 'program' && !empty($item['university_names'])): ?>
+                    <div class="card-related-universities">
+                      <strong>Universitas yang tersedia</strong>
+                      <p><?= h($item['university_names']) ?></p>
+                    </div>
+                  <?php endif; ?>
+
+                  <div class="card-footer">
+                    <?php if (!empty($item['info_url'])): ?>
+                      <a class="website-btn" href="<?= h($item['info_url']) ?>" target="_blank" rel="noopener noreferrer">Informasi</a>
+                    <?php endif; ?>
+
+                    <?php if (!empty($item['website_url'])): ?>
+                      <a class="website-btn" href="<?= h($item['website_url']) ?>" target="_blank" rel="noopener noreferrer">Website</a>
+                    <?php endif; ?>
+                  </div>
+                </article>
+              <?php endforeach; ?>
+            </section>
+          <?php endif; ?>
+        </div>
+      </div>
+    </section>
+
+    <section class="info-section" id="fitur">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Kenapa website ini membantu?</h2>
+          </div>
+          <p>Semua kebutuhan studi ke Jepang bisa dicari dalam satu tempat.</p>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature">
+            <div class="feature-icon">🎓</div>
+            <h3>Pilihan program relevan</h3>
+            <p>Cari universitas dan program yang sesuai dengan minat dan target studi kamu.</p>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon">📍</div>
+            <h3>Informasi universitas</h3>
+            <p>Bandingkan lokasi, jenis universitas, dan informasi terkait dengan mudah.</p>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon">🔎</div>
+            <h3>Pencarian cepat</h3>
+            <p>Temukan universitas dan program yang relevan menggunakan satu pencarian.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="tentang">
+    <div class="container footer-wrap">
+      <div>
+        <strong>StudyNihon</strong><br />
+        <div class="footer-note">
+          Proyek siswa Sekolah Islam Athirah
+        </div>
+      </div>
+      <div class="footer-meta">
+        <div>© 2026 StudyNihon</div>
+        <div class="version">Version alpha-05</div>
+      </div>
     </div>
+  </footer>
 
-    <div class="feature-grid">
-      <div class="feature">
-        <div class="feature-icon">🎓</div>
-        <h3>Pilihan program relevan</h3>
-        <p>Cari universitas dan jurusan yang sesuai dengan minat dan target studi kamu.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">📍</div>
-        <h3>Filter kota &amp; jurusan</h3>
-        <p>Fokuskan pencarian berdasarkan kota, bidang studi, dan level pendidikan.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">🔎</div>
-        <h3>Pencarian cepat</h3>
-        <p>Temukan program yang paling cocok dengan mudah.</p>
-      </div>
-    </div>
-  </div>
-</section>
+  <dialog id="image-info-dialog">
+    <h2>Informasi Gambar</h2>
+    <p><strong>Lisensi:</strong> <span id="dialog-image-license"></span></p>
+    <div id="dialog-image-links"></div>
+    <form method="dialog">
+      <button type="submit" class="btn btn-primary">Tutup</button>
+    </form>
+  </dialog>
 
 <script>
   const searchForm = document.getElementById('search-form');
@@ -840,7 +898,6 @@ $items = array_merge($universityItems, $programItems);
 
     card.addEventListener('keydown', function (event) {
       if (event.target.closest('a, button')) return;
-
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
         toggleCard();
