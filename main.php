@@ -920,28 +920,6 @@ $items = array_merge($universityItems, $programItems);
       const linksContainer = document.getElementById('dialog-image-links');
       linksContainer.replaceChildren();
 
-      [
-        ['Informasi', button.dataset.infoUrl],
-        ['Website', button.dataset.websiteUrl]
-      ].forEach(function ([label, value]) {
-        if (!value) return;
-
-        try {
-          const url = new URL(value, window.location.href);
-          if (!['http:', 'https:'].includes(url.protocol)) return;
-
-          const link = document.createElement('a');
-          link.href = url.href;
-          link.target = '_blank';
-          link.rel = 'noopener noreferrer';
-          link.textContent = label;
-          linksContainer.appendChild(link);
-          linksContainer.appendChild(document.createElement('br'));
-        } catch (error) {
-          // URLが無効な場合は表示しません
-        }
-      });
-
       const sourceUrl = button.dataset.imageSourceUrl;
 
       if (sourceUrl) {
