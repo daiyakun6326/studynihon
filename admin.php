@@ -16,6 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $websiteUrl = trim($_POST['website_url'] ?? '');
         $infoUrl = trim($_POST['info_url'] ?? '');
         $description = trim($_POST['description'] ?? '');
+        $imageLicense = trim($_POST['image_license'] ?? '');
+        $imageSourceUrl = trim($_POST['image_source_url'] ?? '');
 
         if ($name !== '' && $prefecture !== '' && $municipality !== '') {
             $institutionType = trim($_POST['institution_type'] ?? 'private');
@@ -34,7 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     photo_url,
                     website_url,
                     info_url,
-                    description
+                    description,
+                    image_license,
+                    image_source_url
                 )
                 VALUES
                 (
@@ -46,7 +50,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     :photo_url,
                     :website_url,
                     :info_url,
-                    :description
+                    :description,
+                    :image_license,
+                    :image_source_url
                 )
             ");
 
@@ -59,7 +65,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':photo_url' => $photoUrl,
                 ':website_url' => $websiteUrl,
                 ':info_url' => $infoUrl,
-                ':description' => $description
+                ':description' => $description,
+                ':image_license' => $imageLicense,
+                ':image_source_url' => $imageSourceUrl
             ]);
 
             $_SESSION['flash'] = 'Data universitas berhasil ditambahkan.';
@@ -271,6 +279,16 @@ $universities = $universityStmt->fetchAll();
           </div>
 
           <div class="field full">
+            <label>Lisensi Gambar</label>
+            <input type="text" name="image_license" placeholder="© Pemilik / CC BY 4.0">
+          </div>
+
+          <div class="field full">
+            <label>Link Sumber Gambar</label>
+            <input type="url" name="image_source_url" placeholder="https://sumber-gambar.com">
+          </div>
+
+          <div class="field full">
             <label>Website Universitas</label>
             <input type="text" name="website_url" placeholder="https://kampuscontoh.com"/>
           </div>
@@ -342,6 +360,16 @@ $universities = $universityStmt->fetchAll();
               name="logo_url"
               placeholder="https://contoh.com/logo.png"
             />
+          </div>
+
+          <div class="field full">
+            <label>Lisensi Gambar</label>
+            <input type="text" name="image_license" placeholder="© Pemilik / CC BY 4.0">
+          </div>
+
+          <div class="field full">
+            <label>Link Sumber Gambar</label>
+            <input type="url" name="image_source_url" placeholder="https://sumber-gambar.com">
           </div>
 
           <div class="field full">

@@ -49,6 +49,7 @@ try {
             $infoUrl = trim($_POST['info_url'] ?? '');
             $description = trim($_POST['description'] ?? '');
             $imageLicense = trim($_POST['image_license'] ?? '');
+            $imageSourceUrl = trim($_POST['image_source_url'] ?? '');
 
             if ($name === '' || $prefecture === '' || $municipality === '') {
                 throw new RuntimeException('Nama universitas, provinsi, dan kota wajib diisi.');
@@ -65,7 +66,8 @@ try {
                     website_url = :website_url,
                     info_url = :info_url,
                     description = :description,
-                    image_license = :image_license
+                    image_license = :image_license,
+                    image_source_url = :image_source_url
                 WHERE id = :id
             ");
 
@@ -80,6 +82,7 @@ try {
                 ':info_url' => $infoUrl,
                 ':description' => $description,
                 ':image_license' => $imageLicense,
+                ':image_source_url' => $imageSourceUrl,
                 ':id' => $id,
             ]);
 
@@ -364,6 +367,13 @@ $programs = $pdo->query("
             value="<?= htmlspecialchars($university['image_license'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
           >
 
+          <label>Link Sumber Gambar</label>
+          <input
+            type="url"
+            name="image_source_url"
+            value="<?= htmlspecialchars($university['image_source_url'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+          >
+
           <label>Jenis Universitas</label>
           <select name="institution_type" required>
             <option value="private" <?= (($university['institution_type'] ?? 'private') === 'private') ? 'selected' : '' ?>>Swasta</option>
@@ -476,12 +486,20 @@ $programs = $pdo->query("
             name="logo_url"
             value="<?= htmlspecialchars($program['logo_url'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
           >
+
           <label>Lisensi Gambar</label>
           <input
             type="text"
             name="image_license"
             placeholder="Contoh: © Nama pemilik / CC BY 4.0"
-            value="<?= htmlspecialchars($program['image_license'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+            value="<?= htmlspecialchars($university['image_license'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+          >
+
+          <label>Link Sumber Gambar</label>
+          <input
+            type="url"
+            name="image_source_url"
+            value="<?= htmlspecialchars($university['image_source_url'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
           >
 
           <label>Deskripsi</label>

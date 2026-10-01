@@ -60,6 +60,7 @@ $universitySql = "
         u.info_url,
         u.description,
         u.image_license,
+        u.image_source_url,
         'university' AS item_type
     FROM universities u
 ";
@@ -134,6 +135,7 @@ $programSql = "
         p.info_url,
         p.description,
         p.image_license,
+        p.image_source_url,
         GROUP_CONCAT(DISTINCT u.name ORDER BY u.name SEPARATOR ', ') AS university_names,
         'program' AS item_type
     FROM programs p
@@ -753,6 +755,7 @@ $items = array_merge($universityItems, $programItems);
                       class="image-info-button"
                       aria-label="Informasi gambar"
                       data-license="<?= h($item['image_license'] ?? '') ?>"
+                      data-image-source-url="<?= h($item['image_source_url'] ?? '') ?>"
                       data-info-url="<?= h($item['info_url'] ?? '') ?>"
                       data-website-url="<?= h($item['website_url'] ?? '') ?>"
                     >i</button>
@@ -938,6 +941,25 @@ $items = array_merge($universityItems, $programItems);
           // URLが無効な場合は表示しません
         }
       });
+
+      const sourceUrl = button.dataset.imageSourceUrl;
+
+      if (sourceUrl) {
+        try {
+          const url = new URL(sourceUrl, window.location.href);
+
+          if (['http:', 'https:'].includes(url.protocol)) {
+            const link = document.createElement('a');
+            link.href = url.href;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.textContent = '画像掲載元を開く';
+            linksContainer.appendChild(link);
+          }
+        } catch (error) {
+          // 無効なURLは表示しません
+        }
+      }
 
       infoDialog.showModal();
     });
