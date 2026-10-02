@@ -931,7 +931,7 @@ $items = array_merge($universityItems, $programItems);
             link.href = url.href;
             link.target = '_blank';
             link.rel = 'noopener noreferrer';
-            link.textContent = '画像掲載元を開く';
+            link.textContent = 'Sumber Gambar';
             linksContainer.appendChild(link);
           }
         } catch (error) {
