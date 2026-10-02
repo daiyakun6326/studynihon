@@ -1,7 +1,7 @@
 <?php
 // filepath: C:\xampp\htdocs\alpha-05\main.php
 
-require __DIR__ . '/connect.php';
+require __DIR__ . '/../private/connect.php';
 
 function h($value): string
 {
@@ -867,7 +867,7 @@ $items = array_merge($universityItems, $programItems);
       </div>
       <div class="footer-meta">
         <div>© 2026 StudyNihon</div>
-        <div class="version">Version alpha-05</div>
+        <div class="version">Version rl-0001</div>
       </div>
     </div>
   </footer>
