@@ -606,7 +606,7 @@ $items = array_merge($universityItems, $programItems);
 <body>
   <header>
     <div class="container nav">
-      <div class="logo">StudyNihon</div>
+      <a class="logo" href="#">StudyNihon</a>
       <nav class="nav-links">
         <a href="#search">Cari</a>
         <a href="#program">Program</a>
