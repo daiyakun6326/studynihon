@@ -2,7 +2,7 @@
 require_once __DIR__ . '/auth.php';
 requireLogin();
 
-require __DIR__ . '/../../private/connect.php';
+require __DIR__ . '/../private/connect.php';
 
 $message = $_SESSION['flash'] ?? '';
 unset($_SESSION['flash']);

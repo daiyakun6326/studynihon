@@ -1,7 +1,7 @@
 <?php
 // filepath: C:\xampp\htdocs\alpha-05\main.php
 
-require __DIR__ . '/../private/connect.php';
+require __DIR__ . '/private/connect.php';
 
 function h($value): string
 {
