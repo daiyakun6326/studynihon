@@ -9,6 +9,10 @@ unset($_SESSION['flash']);
 
 try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      if (!verifyAdminCsrfToken($_POST['csrf_token'] ?? null)) {
+          http_response_code(403);
+          exit('Invalid request.');
+      }
         $action = $_POST['action'] ?? '';
 
         if ($action === 'delete_university') {
@@ -98,6 +102,7 @@ try {
             $title = trim($_POST['title'] ?? '');
             $logoUrl = trim($_POST['logo_url'] ?? '');
             $imageLicense = trim($_POST['image_license'] ?? '');
+            $imageSourceUrl = trim($_POST['image_source_url'] ?? '');
             $programType = trim($_POST['program_type'] ?? '');
             $targetAudience = trim($_POST['target_audience'] ?? '');
             $level = trim($_POST['level'] ?? '');
@@ -125,6 +130,7 @@ try {
                 SET title = :title,
                     logo_url = :logo_url,
                     image_license = :image_license,
+                    image_source_url = :image_source_url,
                     program_type = :program_type,
                     target_audience = :target_audience,
                     level = :level,
@@ -140,6 +146,7 @@ try {
                 ':title' => $title,
                 ':logo_url' => $logoUrl,
                 ':image_license' => $imageLicense,
+                ':image_source_url' => $imageSourceUrl,
                 ':program_type' => $programType,
                 ':target_audience' => $targetAudience,
                 ':level' => $level,
@@ -328,6 +335,11 @@ $programs = $pdo->query("
         </button>
 
         <form method="POST" style="display:inline">
+          <input
+            type="hidden"
+            name="csrf_token"
+            value="<?= htmlspecialchars(adminCsrfToken(), ENT_QUOTES, 'UTF-8') ?>"
+          >
           <input type="hidden" name="action" value="delete_university">
           <input type="hidden" name="id" value="<?= (int)$university['id'] ?>">
           <button class="delete" type="submit"
@@ -342,6 +354,11 @@ $programs = $pdo->query("
           method="POST"
           enctype="multipart/form-data"
         >
+          <input
+            type="hidden"
+            name="csrf_token"
+            value="<?= htmlspecialchars(adminCsrfToken(), ENT_QUOTES, 'UTF-8') ?>"
+          >
           <input type="hidden" name="action" value="update_university">
           <input type="hidden" name="id" value="<?= (int)$university['id'] ?>">
 
@@ -432,6 +449,11 @@ $programs = $pdo->query("
         </button>
 
         <form method="POST" style="display:inline">
+          <input
+            type="hidden"
+            name="csrf_token"
+            value="<?= htmlspecialchars(adminCsrfToken(), ENT_QUOTES, 'UTF-8') ?>"
+          >
           <input type="hidden" name="action" value="delete_program">
           <input type="hidden" name="id" value="<?= (int)$program['id'] ?>">
           <button class="delete" type="submit"
@@ -446,6 +468,11 @@ $programs = $pdo->query("
           method="POST"
           enctype="multipart/form-data"
         >
+          <input
+            type="hidden"
+            name="csrf_token"
+            value="<?= htmlspecialchars(adminCsrfToken(), ENT_QUOTES, 'UTF-8') ?>"
+          >
           <input type="hidden" name="action" value="update_program">
           <input type="hidden" name="id" value="<?= (int)$program['id'] ?>">
 
@@ -493,14 +520,14 @@ $programs = $pdo->query("
             type="text"
             name="image_license"
             placeholder="Contoh: © Nama pemilik / CC BY 4.0"
-            value="<?= htmlspecialchars($university['image_license'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+            value="<?= htmlspecialchars($program['image_license'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
           >
 
           <label>Link Sumber Gambar</label>
           <input
             type="url"
             name="image_source_url"
-            value="<?= htmlspecialchars($university['image_source_url'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+            value="<?= htmlspecialchars($program['image_source_url'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
           >
 
           <label>Deskripsi</label>

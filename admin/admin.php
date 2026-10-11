@@ -8,6 +8,10 @@ $message = $_SESSION['flash'] ?? '';
 unset($_SESSION['flash']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!verifyAdminCsrfToken($_POST['csrf_token'] ?? null)) {
+        http_response_code(403);
+        exit('Invalid request.');
+    }
     if (isset($_POST['submit_university'])) {
         $name = trim($_POST['name'] ?? '');
         $prefecture = trim($_POST['prefecture'] ?? '');
@@ -95,6 +99,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $websiteUrl = trim($_POST['program_website_url'] ?? '');
         $infoUrl = trim($_POST['info_url'] ?? '');
         $description = trim($_POST['program_description'] ?? '');
+        $imageLicense = trim($_POST['image_license'] ?? '');
+        $imageSourceUrl = trim($_POST['image_source_url'] ?? '');
 
         if (empty($universityIds) || $title === '') {
             $_SESSION['flash'] = 'Universitas dan judul program wajib diisi.';
@@ -107,9 +113,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $stmt = $pdo->prepare("
                 INSERT INTO programs
-                (title, logo_url, program_type, target_audience, level, city, duration, website_url, info_url, description)
+                (title, logo_url, program_type, target_audience, level, city, duration, website_url, info_url, description, image_license, image_source_url)
                 VALUES
-                (:title, :logo_url, :program_type, :target_audience, :level, :city, :duration, :website_url, :info_url, :description)
+                (:title, :logo_url, :program_type, :target_audience, :level, :city, :duration, :website_url, :info_url, :description, :image_license, :image_source_url)
             ");
 
             $stmt->execute([
@@ -122,7 +128,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':duration' => $duration,
                 ':website_url' => $websiteUrl,
                 ':info_url' => $infoUrl,
-                ':description' => $description
+                ':description' => $description,
+                ':image_license' => $imageLicense,
+                ':image_source_url' => $imageSourceUrl
             ]);
 
             $programId = (int)$pdo->lastInsertId();
@@ -244,6 +252,11 @@ $universities = $universityStmt->fetchAll();
       <?php endif; ?>
 
       <form method="POST">
+        <input
+          type="hidden"
+          name="csrf_token"
+          value="<?= htmlspecialchars(adminCsrfToken(), ENT_QUOTES, 'UTF-8') ?>"
+        >
         <div class="form-grid">
           <div class="field">
             <label>Nama Universitas</label>
@@ -319,6 +332,11 @@ $universities = $universityStmt->fetchAll();
       <h2>Tambah Program Studi / Beasiswa</h2>
 
       <form method="POST">
+        <input
+          type="hidden"
+          name="csrf_token"
+          value="<?= htmlspecialchars(adminCsrfToken(), ENT_QUOTES, 'UTF-8') ?>"
+        >
         <div class="form-grid">
           <div class="field">
             <label>Judul Program</label>

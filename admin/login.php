@@ -11,6 +11,11 @@ if (!empty($_SESSION['admin_logged_in'])) {
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!verifyAdminCsrfToken($_POST['csrf_token'] ?? null)) {
+        http_response_code(403);
+        exit('Invalid request.');
+    }
+
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
 
@@ -43,6 +48,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <?php endif; ?>
 
   <form method="post">
+    <input
+      type="hidden"
+      name="csrf_token"
+      value="<?= htmlspecialchars(adminCsrfToken(), ENT_QUOTES, 'UTF-8') ?>"
+    >
     <label>
       username
       <input type="text" name="username" required autocomplete="username">
