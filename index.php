@@ -156,6 +156,22 @@ $programStmt->execute($programParams);
 $programItems = $programStmt->fetchAll(PDO::FETCH_ASSOC);
 
 $items = array_merge($universityItems, $programItems);
+
+$pageSize = 6;
+$totalItems = count($items);
+$totalPages = max(1, (int)ceil($totalItems / $pageSize));
+$page = min(max(1, (int)($_GET['page'] ?? 1)), $totalPages);
+
+$items = array_slice($items, ($page - 1) * $pageSize, $pageSize);
+
+$previousParams = $_GET;
+$previousParams['page'] = max(1, $page - 1);
+$previousUrl = '?' . http_build_query($previousParams);
+
+$nextParams = $_GET;
+$nextParams['page'] = min($totalPages, $page + 1);
+$nextUrl = '?' . http_build_query($nextParams);
+
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -601,6 +617,25 @@ $items = array_merge($universityItems, $programItems);
       .stats { gap: 10px; }
       .stat { min-width: 0; flex: 1 1 100px; }
     }
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .pagination a {
+      padding: 9px 14px;
+      border-radius: 8px;
+      background: #1d4ed8;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .pagination span {
+      color: var(--muted);
+    }
   </style>
 </head>
 <body>
@@ -820,6 +855,19 @@ $items = array_merge($universityItems, $programItems);
                 </article>
               <?php endforeach; ?>
             </section>
+          <?php endif; ?>
+          <?php if ($totalPages > 1): ?>
+            <nav class="pagination" aria-label="ページ移動">
+              <?php if ($page > 1): ?>
+                <a href="<?= h($previousUrl) ?>">Sebelumnya</a>
+              <?php endif; ?>
+
+              <span>Halaman <?= $page ?> / <?= $totalPages ?></span>
+
+              <?php if ($page < $totalPages): ?>
+                <a href="<?= h($nextUrl) ?>">Selanjutnya</a>
+              <?php endif; ?>
+            </nav>
           <?php endif; ?>
         </div>
       </div>
